@@ -15,7 +15,6 @@ const { getCatImage } = require("./cataas.service");
     } = argv;
 
     try {
-        console.log("getting images");
         const firstImagePromise = getCatImage(
             greeting,
             width,
@@ -41,7 +40,6 @@ const { getCatImage } = require("./cataas.service");
                     console.error(err);
                     return;
                 }
-                console.log("output data: ", data);
                 const fileOut = join(process.cwd(), `/cat-card.jpg`);
 
                 writeFile(fileOut, data, "binary", (err) => {

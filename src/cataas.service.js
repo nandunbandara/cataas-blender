@@ -20,8 +20,8 @@ const getCatImage = (greeting, width, height, color, size) =>
                 height,
                 color,
                 s: size,
-                encoding: imageEncoding,
             },
+            encoding: imageEncoding,
         };
 
         request(requestObject, (err, res, body) => {
