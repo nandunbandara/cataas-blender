@@ -1,7 +1,5 @@
-const { writeFile } = require("fs");
-const { join } = require("path");
-const blend = require("@mapbox/blend");
 const argv = require("minimist")(process.argv.slice(2));
+const { blend } = require("./blender.service");
 const { getCatImage } = require("./cataas.service");
 
 (async () => {
@@ -29,29 +27,7 @@ const { getCatImage } = require("./cataas.service");
             secondImagePromise,
         ]);
 
-        blend(
-            [
-                { buffer: Buffer.from(firstBody, "binary"), x: 0, y: 0 },
-                { buffer: Buffer.from(secondBody, "binary"), x: width, y: 0 },
-            ],
-            { width: width * 2, height: height, format: "jpeg" },
-            (err, data) => {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-                const fileOut = join(process.cwd(), `/cat-card.jpg`);
-
-                writeFile(fileOut, data, "binary", (err) => {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    }
-
-                    console.log("The file was saved!");
-                });
-            }
-        );
+        await blend(firstBody, secondBody, width, height);
     } catch (err) {
         console.log(err);
         // todo: log error
